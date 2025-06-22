@@ -4,6 +4,8 @@
 #include <map>
 namespace Renderer {
 	class ShaderProgram;
+	class Texture2D;
+	class Sprite;
 }
 
 
@@ -19,6 +21,16 @@ public:
 
 	std::shared_ptr<Renderer::ShaderProgram> loadShaders(const std::string& shaderName, const std::string& vertexPath, const std::string& fragmentPath);
 	std::shared_ptr<Renderer::ShaderProgram> getShaderProgram(const std::string& shaderName);
+	std::shared_ptr<Renderer::Texture2D> loadTexture(const std::string& textureName, const std::string& texturePath);//для начала получим голые пиксели. Передадим название текстуры, а также где она будет лежать.
+	std::shared_ptr<Renderer::Sprite> loadSprite(const std::string& spriteName,
+		const std::string& textureName,
+		const std::string& shaderName,
+		const unsigned int spriteWidth,
+		const unsigned int spriteHeight);
+
+	std::shared_ptr<Renderer::Texture2D> getTexture(const std::string& textureName);
+	std::shared_ptr<Renderer::Sprite> getSprite(const std::string& spriteName);
+
 
 private:
 	std::string getFileString(const std::string relativeFilePath) const;
@@ -26,6 +38,13 @@ private:
 
 	typedef std::map<const std::string, std::shared_ptr<Renderer::ShaderProgram>> ShaderProgramsMap;
 	ShaderProgramsMap m_shaderPrograms;
+
+	typedef std::map<const std::string, std::shared_ptr<Renderer::Texture2D>> TexturesMap;
+	TexturesMap m_textures;
+
+	//точно также будем подгружать спрайты.
+	typedef std::map<const std::string, std::shared_ptr<Renderer::Sprite>> SpritesMap;
+	SpritesMap m_sprites;
 
 	std::string m_path;
 };
